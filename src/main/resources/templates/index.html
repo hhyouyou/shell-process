@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>shell process</title>
+</head>
+<body>
+
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    function exec() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/command",//url
+            data: $('#shell').serialize(),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.code === 200) {
+                    // var data = result.data;
+                    // data.toString().replace('\r\n','<br/>')
+                    $("#p-result").html(result.data);
+                }
+
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+</script>
+
+<form id="shell" method="post">
+    command :
+    <label>
+        <input type="text" name="command">
+    </label>
+    <input type="button" value="Submit" onclick="exec()">
+</form>
+
+<br>
+
+<div>
+    <p id="p-result"></p>
+</div>
+
+</body>
+
+</html>
+
+
+
